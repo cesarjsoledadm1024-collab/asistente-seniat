@@ -31,9 +31,6 @@ st.markdown("""
             color: #FFD700 !important;
             text-align: center;
         }
-        section[data-testid="stSidebar"] {
-            background-color: #002244;
-        }
         .stChatMessage p {
             color: white !important;
         }
@@ -41,6 +38,11 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 client = Groq(api_key=st.secrets["GROQ_API_KEY"])
+
+# Logo y título
+col1, col2, col3 = st.columns([1, 2, 1])
+with col2:
+    st.image("logo.png", width=200)
 
 st.title("🏛️ Asistente Virtual SENIAT")
 st.caption("Atención al contribuyente - Consultas tributarias")
@@ -64,7 +66,7 @@ if pregunta := st.chat_input("¿En qué le podemos ayudar?"):
                 {
                     "role": "system",
                     "content": """Eres un asistente virtual oficial del SENIAT (Servicio Nacional Integrado de Administración Aduanera y Tributaria de Venezuela).
-                    Atiendes a los contribuyentes con información clara, precisa y amable sobre los siguientes temas:
+                    Atiendes a los contribuyentes con información clara, precisa y amable sobre:
                     - Registro de RIF
                     - Declaraciones de IVA e ISLR
                     - Retenciones de IVA e ISLR
