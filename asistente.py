@@ -17,7 +17,18 @@ st.markdown("""
         section[data-testid="stSidebar"] { background-color: #002244; }
         section[data-testid="stSidebar"] h2 { color: #FFD700 !important; }
         section[data-testid="stSidebar"] p { color: white !important; }
-        footer { color: #FFD700 !important; text-align: center; }
+        .stButton button {
+            background-color: #004080;
+            color: #FFD700;
+            border: 1px solid #FFD700;
+            border-radius: 8px;
+            width: 100%;
+            margin: 2px 0;
+        }
+        .stButton button:hover {
+            background-color: #FFD700;
+            color: #003366;
+        }
     </style>
 """, unsafe_allow_html=True)
 
@@ -60,37 +71,64 @@ with col2:
 st.title("🏛️ Asistente Virtual SENIAT")
 st.caption("Atención al contribuyente - Consultas tributarias")
 
-# Mensaje de bienvenida automático
+# Inicializar mensajes
 if "mensajes" not in st.session_state:
     st.session_state.mensajes = []
-    with st.chat_message("assistant"):
-        bienvenida = """¡Bienvenido al Asistente Virtual del SENIAT! 🏛️
+    bienvenida = """¡Bienvenido al Asistente Virtual del SENIAT! 🏛️
 
 Estoy aquí para ayudarle con sus consultas tributarias. Puede preguntarme sobre:
 
-✅ Registro de RIF
-✅ Declaraciones de IVA e ISLR
-✅ Retenciones
-✅ Contribuyentes Especiales
-✅ Solvencia Tributaria
-✅ Sanciones y Recursos
-✅ Facturación Fiscal
+✅ Registro de RIF  ✅ Declaraciones de IVA e ISLR  ✅ Retenciones
+✅ Contribuyentes Especiales  ✅ Solvencia Tributaria  ✅ Sanciones y Recursos
 
 ¿En qué le puedo ayudar hoy?"""
-        st.write(bienvenida)
-        st.session_state.mensajes.append({
-            "role": "assistant",
-            "content": bienvenida
-        })
+    st.session_state.mensajes.append({"role": "assistant", "content": bienvenida})
 
+# Preguntas frecuentes
+st.markdown("### 💬 Preguntas Frecuentes")
+preguntas = [
+    "¿Cuáles son los requisitos para obtener el RIF?",
+    "¿Cómo declaro el IVA en el portal del SENIAT?",
+    "¿Cuándo vence la declaración de ISLR?",
+    "¿Qué es un contribuyente especial?",
+    "¿Cómo obtengo la solvencia tributaria?",
+    "¿Cuáles son las sanciones por no declarar a tiempo?",
+    "¿Cómo recupero mi clave del portal SENIAT?",
+    "¿Cuál es el porcentaje del IVA en Venezuela?",
+]
+
+col1, col2 = st.columns(2)
+for i, pregunta in enumerate(preguntas):
+    if i % 2 == 0:
+        with col1:
+            if st.button(pregunta, key=f"btn_{i}"):
+                st.session_state.pregunta_rapida = pregunta
+    else:
+        with col2:
+            if st.button(pregunta, key=f"btn_{i}"):
+                st.session_state.pregunta_rapida = pregunta
+
+st.markdown("---")
+
+# Mostrar mensajes
 for msg in st.session_state.mensajes:
     with st.chat_message(msg["role"]):
         st.write(msg["content"])
 
-if pregunta := st.chat_input("¿En qué le podemos ayudar?"):
-    st.session_state.mensajes.append({"role": "user", "content": pregunta})
+# Procesar pregunta rápida o escrita
+pregunta_actual = None
+
+if "pregunta_rapida" in st.session_state and st.session_state.pregunta_rapida:
+    pregunta_actual = st.session_state.pregunta_rapida
+    st.session_state.pregunta_rapida = None
+
+if entrada := st.chat_input("¿En qué le podemos ayudar?"):
+    pregunta_actual = entrada
+
+if pregunta_actual:
+    st.session_state.mensajes.append({"role": "user", "content": pregunta_actual})
     with st.chat_message("user"):
-        st.write(pregunta)
+        st.write(pregunta_actual)
 
     with st.chat_message("assistant"):
         respuesta = client.chat.completions.create(
@@ -98,8 +136,8 @@ if pregunta := st.chat_input("¿En qué le podemos ayudar?"):
             messages=[
                 {
                     "role": "system",
-                    "content": """Eres un asistente virtual oficial del SENIAT (Servicio Nacional Integrado de Administración Aduanera y Tributaria de Venezuela).
-                    Atiendes a los contribuyentes con información clara, precisa y amable sobre:
+                    "content": """Eres un asistente virtual oficial del SENIAT (Venezuela).
+                    Atiendes contribuyentes con información sobre:
                     - Registro de RIF
                     - Declaraciones de IVA e ISLR
                     - Retenciones de IVA e ISLR
@@ -108,14 +146,15 @@ if pregunta := st.chat_input("¿En qué le podemos ayudar?"):
                     - Sanciones y recursos tributarios
                     - Facturación fiscal
                     - Trámites en línea
-                    Responde siempre en español, de forma clara, ordenada y amable.
-                    Si no conoces la respuesta con certeza, indica al contribuyente que se dirija a la oficina del SENIAT más cercana o al portal oficial www.seniat.gob.ve"""
+                    Responde en español, de forma clara y amable.
+                    Si no estás seguro, indica al contribuyente que visite www.seniat.gob.ve"""
                 }
             ] + st.session_state.mensajes
         )
         texto = respuesta.choices[0].message.content
         st.write(texto)
         st.session_state.mensajes.append({"role": "assistant", "content": texto})
+    st.rerun()
 
 # Pie de página
 st.markdown("---")
