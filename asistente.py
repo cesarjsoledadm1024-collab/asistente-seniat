@@ -1,7 +1,7 @@
 import streamlit as st
 from groq import Groq
 
-client = Groq(api_key="PEGA_TU_CLAVE_AQUI")
+client = Groq(api_key=st.secrets["GROQ_API_KEY"])
 st.title("🏛️ Asistente Virtual SENIAT")
 st.caption("Atención al contribuyente - Consultas tributarias")
 
@@ -83,4 +83,5 @@ if pregunta := st.chat_input("¿En qué le podemos ayudar?"):
         )
         texto = respuesta.choices[0].message.content
         st.write(texto)
+
         st.session_state.mensajes.append({"role": "assistant", "content": texto})
