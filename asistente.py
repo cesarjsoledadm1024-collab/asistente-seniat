@@ -36,7 +36,7 @@ st.markdown("""
         @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap');
         
         .stApp { 
-            background: linear-gradient(135deg, #001f4d 0%, #003366 50%, #004080 100%);
+            background: linear-gradient(135deg, rgb(0,31,77) 0%, rgb(0,51,102) 50%, rgb(0,64,128) 100%);
             font-family: 'Roboto', sans-serif;
         }
         .stChatMessage { 
@@ -63,14 +63,14 @@ st.markdown("""
         .stChatMessage p { color: white !important; }
         
         section[data-testid="stSidebar"] { 
-            background: linear-gradient(180deg, #001133 0%, #002244 100%);
+            background: linear-gradient(180deg, rgb(0,17,51) 0%, rgb(0,34,68) 100%);
             border-right: 2px solid #FFD700;
         }
         section[data-testid="stSidebar"] h2 { color: #FFD700 !important; }
         section[data-testid="stSidebar"] p { color: white !important; }
         
         .stButton button {
-            background: linear-gradient(90deg, #004080, #002244);
+            background: linear-gradient(90deg, rgb(0,64,128), rgb(0,34,68));
             color: #FFD700;
             border: 1px solid #FFD700;
             border-radius: 10px;
@@ -80,7 +80,7 @@ st.markdown("""
             transition: all 0.3s ease;
         }
         .stButton button:hover {
-            background: linear-gradient(90deg, #FFD700, #FFA500);
+           background: linear-gradient(90deg, rgb(255,215,0), rgb(255,165,0));
             color: #003366;
             transform: scale(1.02);
             box-shadow: 0 4px 15px rgba(255, 215, 0, 0.4);
@@ -691,6 +691,7 @@ st.markdown("""
     📍 Venezuela
 </div>
 """, unsafe_allow_html=True)
+
 
 
 
