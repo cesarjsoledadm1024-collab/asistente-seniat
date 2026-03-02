@@ -581,7 +581,8 @@ with tab5:
         ]
         for i, paso in enumerate(pasos, 1):
             st.markdown(f"**Paso {i}:** {paso}")
-        st.error("⚠️ **Importante
+        st.error("Importante: Se recomienda asesorarse con un abogado tributario")
+                 
 
 st.markdown("---")
 st.markdown("""
@@ -592,6 +593,7 @@ st.markdown("""
     📍 Venezuela
 </div>
 """, unsafe_allow_html=True)
+
 
 
 
