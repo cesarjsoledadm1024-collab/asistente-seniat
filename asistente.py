@@ -306,10 +306,6 @@ Estoy aquí para ayudarle con sus consultas tributarias. Puede preguntarme sobre
             st.write(texto)
             st.session_state.mensajes.append({"role": "assistant", "content": texto})
         st.rerun()
-
-st.markdown("---")
-st.markdown("""
-<div style='text-align: center; color: #FFD700;'>
 with tab4:
     st.markdown("## 📖 Glosario Tributario SENIAT")
     st.markdown("---")
@@ -350,9 +346,14 @@ with tab4:
         for termino, definicion in sorted(terminos.items()):
             with st.expander(f"📌 {termino}"):
                 st.write(definicion)
+st.markdown("---")
+st.markdown("""
+<div style='text-align: center; color: #FFD700;'>
+
     🏛️ <b>SENIAT</b> - Servicio Nacional Integrado de Administración Aduanera y Tributaria<br>
     📞 0800-SENIAT (736428) | 🌐 www.seniat.gob.ve<br>
     📍 Venezuela
 </div>
 """, unsafe_allow_html=True)
+
 
