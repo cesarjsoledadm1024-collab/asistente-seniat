@@ -1,5 +1,6 @@
 import streamlit as st
 from groq import Groq
+from datetime import datetime
 
 st.set_page_config(
     page_title="Asistente Virtual SENIAT",
@@ -28,12 +29,6 @@ st.markdown("""
         .stButton button:hover {
             background-color: #FFD700;
             color: #003366;
-        }
-        .calculadora {
-            background-color: #004080;
-            border-radius: 10px;
-            padding: 20px;
-            border: 1px solid #FFD700;
         }
     </style>
 """, unsafe_allow_html=True)
@@ -78,7 +73,88 @@ st.title("🏛️ Asistente Virtual SENIAT")
 st.caption("Atención al contribuyente - Consultas tributarias")
 
 # Pestañas
-tab1, tab2 = st.tabs(["💬 Asistente", "🧮 Calculadora"])
+tab1, tab2, tab3 = st.tabs(["💬 Asistente", "🧮 Calculadora", "📅 Fechas de Declaración"])
+
+with tab3:
+    st.markdown("## 📅 Fechas de Declaración")
+    st.markdown("---")
+
+    hoy = datetime.now()
+    mes_actual = hoy.month
+    año_actual = hoy.year
+
+    st.markdown(f"### 📆 Hoy es: {hoy.strftime('%d/%m/%Y')}")
+    st.markdown("---")
+
+    tipo = st.selectbox(
+        "Selecciona el tipo de contribuyente:",
+        ["Contribuyente Ordinario", "Contribuyente Especial"]
+    )
+
+    if tipo == "Contribuyente Ordinario":
+        st.markdown("### 📌 Fechas para Contribuyentes Ordinarios")
+
+        st.info("""
+        **🔵 IVA - Declaración Mensual**
+        - Se declara dentro de los **15 días hábiles** del mes siguiente
+        - Ejemplo: IVA de Enero → declarar antes del 20 de Febrero aproximadamente
+        """)
+
+        st.info("""
+        **🔵 ISLR - Declaración Anual**
+        - Personas Naturales: **hasta el 31 de Marzo** de cada año
+        - Personas Jurídicas: **dentro de los 3 meses** después del cierre del ejercicio fiscal
+        """)
+
+        st.warning("""
+        **⚠️ Retenciones de IVA**
+        - Se enteran los días **lunes y martes** de cada semana
+        - Según el último dígito del RIF
+        """)
+
+    else:
+        st.markdown("### 📌 Fechas para Contribuyentes Especiales")
+
+        st.info("""
+        **🔴 IVA - Declaración Quincenal**
+        - Primera quincena (días 1-15): declarar entre los días **16 y 20** del mismo mes
+        - Segunda quincena (días 16-31): declarar entre los días **1 y 5** del mes siguiente
+        """)
+
+        st.info("""
+        **🔴 Retenciones de IVA**
+        - Se enteran según el **último dígito del RIF**:
+        
+        | Último dígito RIF | Día de enteramiento |
+        |---|---|
+        | 0 y 1 | Lunes |
+        | 2 y 3 | Martes |
+        | 4 y 5 | Miércoles |
+        | 6 y 7 | Jueves |
+        | 8 y 9 | Viernes |
+        """)
+
+        st.info("""
+        **🔴 ISLR - Declaración Anual**
+        - Personas Naturales: **hasta el 31 de Marzo**
+        - Personas Jurídicas: **dentro de los 3 meses** del cierre fiscal
+        """)
+
+    st.markdown("---")
+    st.error("""
+    **⚠️ Consecuencias por declarar fuera de tiempo:**
+    - Multa por retraso: 10 Unidades Tributarias por cada mes de retraso
+    - Intereses moratorios sobre el monto adeudado
+    - Posible cierre temporal del establecimiento
+    """)
+
+    st.markdown("---")
+    st.markdown("""
+    <div style='text-align: center; color: #FFD700;'>
+    Para consultar el calendario oficial actualizado visita:<br>
+    🌐 <b>www.seniat.gob.ve</b>
+    </div>
+    """, unsafe_allow_html=True)
 
 with tab2:
     st.markdown("## 🧮 Calculadora Tributaria")
@@ -106,7 +182,6 @@ with tab2:
                 - 📊 IVA (16%): Bs. {impuesto:,.2f}
                 - 💵 Total a pagar: Bs. {total:,.2f}
                 """)
-
             elif calc_tipo == "Retención de IVA 75%":
                 iva = monto * 0.16
                 retencion = iva * 0.75
@@ -118,7 +193,6 @@ with tab2:
                 - ✂️ Retención (75%): Bs. {retencion:,.2f}
                 - 💵 IVA a pagar: Bs. {pagar:,.2f}
                 """)
-
             elif calc_tipo == "Retención de IVA 100%":
                 iva = monto * 0.16
                 st.success(f"""
@@ -128,7 +202,6 @@ with tab2:
                 - ✂️ Retención (100%): Bs. {iva:,.2f}
                 - 💵 IVA a pagar: Bs. 0.00
                 """)
-
             elif calc_tipo == "ISLR (estimado)":
                 if monto <= 1000:
                     tasa = 0.06
@@ -149,12 +222,11 @@ with tab2:
                 - 📊 Tasa aplicada: {tasa*100:.0f}%
                 - 💵 ISLR estimado: Bs. {islr:,.2f}
                 """)
-                st.info("⚠️ Este es un cálculo estimado. Para mayor precisión consulte con un especialista tributario.")
+                st.info("⚠️ Este es un cálculo estimado. Consulte con un especialista tributario.")
         else:
             st.warning("⚠️ Por favor ingresa un monto mayor a 0")
 
 with tab1:
-    # Inicializar mensajes
     if "mensajes" not in st.session_state:
         st.session_state.mensajes = []
         bienvenida = """¡Bienvenido al Asistente Virtual del SENIAT! 🏛️
@@ -167,7 +239,6 @@ Estoy aquí para ayudarle con sus consultas tributarias. Puede preguntarme sobre
 ¿En qué le puedo ayudar hoy?"""
         st.session_state.mensajes.append({"role": "assistant", "content": bienvenida})
 
-    # Preguntas frecuentes
     st.markdown("### 💬 Preguntas Frecuentes")
     preguntas = [
         "¿Cuáles son los requisitos para obtener el RIF?",
@@ -193,12 +264,10 @@ Estoy aquí para ayudarle con sus consultas tributarias. Puede preguntarme sobre
 
     st.markdown("---")
 
-    # Mostrar mensajes
     for msg in st.session_state.mensajes:
         with st.chat_message(msg["role"]):
             st.write(msg["content"])
 
-    # Procesar pregunta
     pregunta_actual = None
     if "pregunta_rapida" in st.session_state and st.session_state.pregunta_rapida:
         pregunta_actual = st.session_state.pregunta_rapida
@@ -238,7 +307,6 @@ Estoy aquí para ayudarle con sus consultas tributarias. Puede preguntarme sobre
             st.session_state.mensajes.append({"role": "assistant", "content": texto})
         st.rerun()
 
-# Pie de página
 st.markdown("---")
 st.markdown("""
 <div style='text-align: center; color: #FFD700;'>
