@@ -94,7 +94,22 @@ Estoy aquí para ayudarle con sus consultas tributarias. Puede preguntarme sobre
             st.session_state.mensajes = []
             st.rerun()
 
-    st.markdown("### 💬 Preguntas Frecuentes")
+    
+
+    st.markdown("---")
+
+    for msg in st.session_state.mensajes:
+        with st.chat_message(msg["role"]):
+            st.write(msg["content"])
+
+    pregunta_actual = None
+    if "pregunta_rapida" in st.session_state and st.session_state.pregunta_rapida:
+        pregunta_actual = st.session_state.pregunta_rapida
+        st.session_state.pregunta_rapida = None
+
+    if entrada := st.chat_input("¿En qué le podemos ayudar?"):
+        pregunta_actual = entrada
+st.markdown("### 💬 Preguntas Frecuentes")
     preguntas = [
         "¿Cuáles son los requisitos para obtener el RIF?",
         "¿Cómo declaro el IVA en el portal del SENIAT?",
@@ -116,21 +131,6 @@ Estoy aquí para ayudarle con sus consultas tributarias. Puede preguntarme sobre
             with col2:
                 if st.button(pregunta, key=f"btn_{i}"):
                     st.session_state.pregunta_rapida = pregunta
-
-    st.markdown("---")
-
-    for msg in st.session_state.mensajes:
-        with st.chat_message(msg["role"]):
-            st.write(msg["content"])
-
-    pregunta_actual = None
-    if "pregunta_rapida" in st.session_state and st.session_state.pregunta_rapida:
-        pregunta_actual = st.session_state.pregunta_rapida
-        st.session_state.pregunta_rapida = None
-
-    if entrada := st.chat_input("¿En qué le podemos ayudar?"):
-        pregunta_actual = entrada
-
     if pregunta_actual:
         st.session_state.mensajes.append({"role": "user", "content": pregunta_actual})
         with st.chat_message("user"):
@@ -455,3 +455,4 @@ st.markdown("""
     📍 Venezuela
 </div>
 """, unsafe_allow_html=True)
+
