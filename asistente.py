@@ -73,7 +73,7 @@ st.title("🏛️ Asistente Virtual SENIAT")
 st.caption("Atención al contribuyente - Consultas tributarias")
 
 # Pestañas
-tab1, tab2, tab3 = st.tabs(["💬 Asistente", "🧮 Calculadora", "📅 Fechas de Declaración"])
+tab1, tab2, tab3, tab4 = st.tabs(["💬 Asistente", "🧮 Calculadora", "📅 Fechas de Declaración", "📖 Glosario"])
 
 with tab3:
     st.markdown("## 📅 Fechas de Declaración")
@@ -306,7 +306,46 @@ Estoy aquí para ayudarle con sus consultas tributarias. Puede preguntarme sobre
             st.write(texto)
             st.session_state.mensajes.append({"role": "assistant", "content": texto})
         st.rerun()
+with tab4:
+    st.markdown("## 📖 Glosario Tributario SENIAT")
+    st.markdown("---")
 
+    buscar = st.text_input("🔍 Buscar término:", placeholder="Escribe un término tributario...")
+
+    terminos = {
+        "IVA": "**Impuesto al Valor Agregado (IVA):** Impuesto indirecto que grava la venta de bienes y prestación de servicios. En Venezuela la tasa general es del 16%.",
+        "ISLR": "**Impuesto Sobre la Renta (ISLR):** Impuesto directo que grava los enriquecimientos netos obtenidos por personas naturales y jurídicas durante el año fiscal.",
+        "RIF": "**Registro de Información Fiscal (RIF):** Documento que identifica a las personas naturales y jurídicas ante el SENIAT para el cumplimiento de obligaciones tributarias.",
+        "Contribuyente": "**Contribuyente:** Persona natural o jurídica obligada al pago de tributos por realizar actividades económicas gravadas por la ley.",
+        "Contribuyente Especial": "**Contribuyente Especial:** Persona natural o jurídica calificada por el SENIAT por su alto nivel de ingresos o actividad económica. Tiene obligaciones adicionales.",
+        "Contribuyente Ordinario": "**Contribuyente Ordinario:** Persona natural o jurídica que realiza actividades gravadas con IVA sin ser calificada como especial.",
+        "Retención": "**Retención:** Mecanismo por el cual el comprador o pagador descuenta un porcentaje del impuesto al momento del pago y lo entera al SENIAT.",
+        "Agente de Retención": "**Agente de Retención:** Persona o entidad designada por el SENIAT para retener impuestos a otros contribuyentes y enterarlos al fisco.",
+        "Enteramiento": "**Enteramiento:** Acto de depositar o pagar al SENIAT los impuestos retenidos o recaudados dentro del plazo establecido.",
+        "Débito Fiscal": "**Débito Fiscal:** IVA que el vendedor cobra al comprador en cada operación de venta. Representa el impuesto que se debe al fisco.",
+        "Crédito Fiscal": "**Crédito Fiscal:** IVA pagado por el contribuyente en sus compras. Se puede deducir del débito fiscal para calcular el IVA a pagar.",
+        "Solvencia Tributaria": "**Solvencia Tributaria:** Documento emitido por el SENIAT que certifica que el contribuyente está al día con sus obligaciones tributarias.",
+        "Declaración Sustitutiva": "**Declaración Sustitutiva:** Nueva declaración que reemplaza una declaración anterior cuando se detectan errores u omisiones.",
+        "Unidad Tributaria": "**Unidad Tributaria (UT):** Valor en bolívares establecido por el SENIAT para calcular multas, sanciones y algunos impuestos.",
+        "Ejercicio Fiscal": "**Ejercicio Fiscal:** Período de 12 meses utilizado para calcular y declarar impuestos. Puede coincidir o no con el año calendario.",
+        "Factura Fiscal": "**Factura Fiscal:** Documento que certifica una operación comercial y debe cumplir con los requisitos establecidos por el SENIAT.",
+        "Recurso Jerárquico": "**Recurso Jerárquico:** Mecanismo legal para impugnar actos administrativos del SENIAT ante un superior jerárquico dentro de la misma institución.",
+        "SENIAT": "**SENIAT:** Servicio Nacional Integrado de Administración Aduanera y Tributaria. Organismo del Estado venezolano encargado de recaudar los tributos nacionales.",
+        "Timbre Fiscal": "**Timbre Fiscal:** Impuesto que se paga por la realización de ciertos actos jurídicos o administrativos ante organismos públicos.",
+        "Alícuota": "**Alícuota:** Porcentaje o tasa que se aplica sobre la base imponible para calcular el monto del impuesto a pagar.",
+    }
+
+    if buscar:
+        resultados = {k: v for k, v in terminos.items() if buscar.upper() in k.upper() or buscar.lower() in v.lower()}
+        if resultados:
+            for termino, definicion in resultados.items():
+                st.info(definicion)
+        else:
+            st.warning(f"No se encontró ningún término relacionado con '{buscar}'")
+    else:
+        for termino, definicion in sorted(terminos.items()):
+            with st.expander(f"📌 {termino}"):
+                st.write(definicion)
 st.markdown("---")
 st.markdown("""
 <div style='text-align: center; color: #FFD700;'>
