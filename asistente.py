@@ -33,96 +33,26 @@ st.markdown("""
     </style>
     st.markdown("""
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap');
-        
-        .stApp { 
-            background: linear-gradient(135deg, rgb(0,31,77) 0%, rgb(0,51,102) 50%, rgb(0,64,128) 100%);
-            font-family: 'Roboto', sans-serif;
-        }
-        .stChatMessage { 
-            background-color: rgba(0, 64, 128, 0.8);
-            border-radius: 15px;
-            padding: 15px;
-            border-left: 3px solid #FFD700;
-            margin: 5px 0;
-        }
-        h1 { 
-            color: #FFD700 !important; 
-            text-align: center;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-            font-size: 2.5em !important;
-        }
-        h2, h3 {
-            color: #FFD700 !important;
-        }
-        .stCaption { 
-            color: #FFD700 !important; 
-            text-align: center;
-            font-size: 1.1em !important;
-        }
-        .stChatMessage p { color: white !important; }
-        
-        section[data-testid="stSidebar"] { 
-            background: linear-gradient(180deg, rgb(0,17,51) 0%, rgb(0,34,68) 100%);
-            border-right: 2px solid #FFD700;
-        }
-        section[data-testid="stSidebar"] h2 { color: #FFD700 !important; }
-        section[data-testid="stSidebar"] p { color: white !important; }
-        
-        .stButton button {
-            background: linear-gradient(90deg, rgb(0,64,128), rgb(0,34,68));
-            color: #FFD700;
-            border: 1px solid #FFD700;
-            border-radius: 10px;
-            width: 100%;
-            margin: 3px 0;
-            font-weight: bold;
-            transition: all 0.3s ease;
-        }
-        .stButton button:hover {
-           background: linear-gradient(90deg, rgb(255,215,0), rgb(255,165,0));
-            color: #003366;
-            transform: scale(1.02);
-            box-shadow: 0 4px 15px rgba(255, 215, 0, 0.4);
-        }
-        .stTextInput input {
-            background-color: #004080;
-            color: white;
-            border: 1px solid #FFD700;
-            border-radius: 10px;
-        }
-        .stSelectbox div {
-            background-color: #004080;
-            color: white;
-            border: 1px solid #FFD700;
-        }
-        .stNumberInput input {
-            background-color: #004080;
-            color: white;
-            border: 1px solid #FFD700;
-        }
-        .stTabs [data-baseweb="tab-list"] {
-            background-color: #002244;
-            border-radius: 10px;
-            padding: 5px;
-        }
-        .stTabs [data-baseweb="tab"] {
-            color: #FFD700 !important;
-            font-weight: bold;
-        }
-        .stTabs [aria-selected="true"] {
-            background-color: #004080 !important;
-            border-radius: 8px;
-        }
-        div[data-testid="stExpander"] {
-            background-color: rgba(0, 64, 128, 0.5);
-            border: 1px solid #FFD700;
-            border-radius: 10px;
-        }
-        .stAlert {
-            border-radius: 10px;
-        }
-    </style>
+      css = """
+<style>
+.stApp { background-color: #003366; }
+.stChatMessage { background-color: #004080; border-radius: 15px; padding: 15px; border-left: 3px solid #FFD700; margin: 5px 0; }
+h1 { color: #FFD700 !important; text-align: center; }
+h2, h3 { color: #FFD700 !important; }
+.stCaption { color: #FFD700 !important; text-align: center; }
+.stChatMessage p { color: white !important; }
+section[data-testid="stSidebar"] { background-color: #002244; border-right: 2px solid #FFD700; }
+section[data-testid="stSidebar"] h2 { color: #FFD700 !important; }
+section[data-testid="stSidebar"] p { color: white !important; }
+.stButton button { background-color: #004080; color: #FFD700; border: 1px solid #FFD700; border-radius: 10px; width: 100%; margin: 3px 0; font-weight: bold; }
+.stButton button:hover { background-color: #FFD700; color: #003366; }
+.stTabs [data-baseweb="tab-list"] { background-color: #002244; border-radius: 10px; padding: 5px; }
+.stTabs [data-baseweb="tab"] { color: #FFD700 !important; font-weight: bold; }
+.stTabs [aria-selected="true"] { background-color: #004080 !important; border-radius: 8px; }
+div[data-testid="stExpander"] { background-color: rgba(0,64,128,0.5); border: 1px solid #FFD700; border-radius: 10px; }
+</style>
+"""
+st.markdown(css, unsafe_allow_html=True)
 """, unsafe_allow_html=True)
 """, unsafe_allow_html=True)
 
@@ -691,6 +621,7 @@ st.markdown("""
     📍 Venezuela
 </div>
 """, unsafe_allow_html=True)
+
 
 
 
