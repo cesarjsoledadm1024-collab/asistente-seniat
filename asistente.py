@@ -73,7 +73,7 @@ st.title("🏛️ Asistente Virtual SENIAT")
 st.caption("Atención al contribuyente - Consultas tributarias")
 
 # Pestañas
-tab1, tab2, tab3, tab4 = st.tabs(["💬 Asistente", "🧮 Calculadora", "📅 Fechas de Declaración", "📖 Glosario"])
+tab1, tab2, tab3, tab4, tab5 = st.tabs(["💬 Asistente", "🧮 Calculadora", "📅 Fechas de Declaración", "📖 Glosario", "🔍 Consulta RIF"])
 
 with tab3:
     st.markdown("## 📅 Fechas de Declaración")
@@ -346,7 +346,96 @@ with tab4:
         for termino, definicion in sorted(terminos.items()):
             with st.expander(f"📌 {termino}"):
                 st.write(definicion)
+with tab5:
+    st.markdown("## 🔍 Consulta y Verificación de RIF")
+    st.markdown("---")
+
+    st.markdown("""
+    El RIF (Registro de Información Fiscal) tiene el siguiente formato:
+    
+    | Tipo | Formato | Ejemplo |
+    |------|---------|---------|
+    | Persona Natural | V-XXXXXXXX-X | V-12345678-9 |
+    | Persona Jurídica | J-XXXXXXXX-X | J-12345678-9 |
+    | Gobierno | G-XXXXXXXX-X | G-20004036-0 |
+    | Extranjero | E-XXXXXXXX-X | E-12345678-9 |
+    | Pasaporte | P-XXXXXXXX-X | P-12345678-9 |
+    """)
+
+    st.markdown("---")
+    st.markdown("### ✅ Verificar formato de RIF")
+
+    rif = st.text_input(
+        "Ingresa el RIF a verificar:",
+        placeholder="Ejemplo: V-12345678-9",
+        max_chars=13
+    ).upper().strip()
+
+    if st.button("🔍 Verificar RIF"):
+        if rif:
+            import re
+            patron = r'^[VJGEP]-\d{8}-\d$'
+            if re.match(patron, rif):
+                tipo_rif = {
+                    "V": "Persona Natural Venezolana",
+                    "J": "Persona Jurídica",
+                    "G": "Organismo Gubernamental",
+                    "E": "Persona Natural Extranjera",
+                    "P": "Persona con Pasaporte"
+                }
+                letra = rif[0]
+                st.success(f"""
+                ✅ **El formato del RIF es VÁLIDO**
                 
+                - 📋 RIF: **{rif}**
+                - 👤 Tipo: **{tipo_rif.get(letra, 'Desconocido')}**
+                - 🔤 Prefijo: **{letra}**
+                """)
+                st.info("""
+                ℹ️ **Nota:** Esta herramienta solo verifica el **formato** del RIF.
+                Para verificar si el RIF está activo y registrado, visita:
+                🌐 **www.seniat.gob.ve → Consulta de RIF**
+                """)
+            else:
+                st.error(f"""
+                ❌ **El formato del RIF no es válido**
+                
+                El RIF debe tener el formato: **X-XXXXXXXX-X**
+                
+                Donde X es:
+                - Primera letra: V, J, G, E o P
+                - Luego un guión (-)
+                - 8 números
+                - Otro guión (-)
+                - 1 número final
+                
+                Ejemplo correcto: **V-12345678-9**
+                """)
+        else:
+            st.warning("⚠️ Por favor ingresa un RIF para verificar")
+
+    st.markdown("---")
+    st.markdown("### 📋 ¿Cómo obtener tu RIF?")
+    with st.expander("Ver pasos para obtener el RIF"):
+        st.markdown("""
+        **Personas Naturales:**
+        1. Ingresa a **www.seniat.gob.ve**
+        2. Selecciona **"Registro de Contribuyentes"**
+        3. Completa el formulario con tus datos
+        4. Presenta la cédula de identidad en la oficina del SENIAT
+        5. Recibe tu RIF en el momento
+        
+        **Personas Jurídicas:**
+        1. Ingresa a **www.seniat.gob.ve**
+        2. Selecciona **"Registro de Contribuyentes"**
+        3. Completa el formulario con los datos de la empresa
+        4. Presenta los documentos en la oficina del SENIAT:
+           - Acta constitutiva
+           - RIF del representante legal
+           - Comprobante de domicilio
+        5. Recibe tu RIF en el momento
+        """)
+
 st.markdown("---")
 st.markdown("""
 <div style='text-align: center; color: #FFD700;'>
@@ -356,6 +445,7 @@ st.markdown("""
     📍 Venezuela
 </div>
 """, unsafe_allow_html=True)
+
 
 
 
