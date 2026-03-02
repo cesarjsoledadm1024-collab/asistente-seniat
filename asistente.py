@@ -31,6 +31,99 @@ st.markdown("""
             color: #003366;
         }
     </style>
+    st.markdown("""
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap');
+        
+        .stApp { 
+            background: linear-gradient(135deg, #001f4d 0%, #003366 50%, #004080 100%);
+            font-family: 'Roboto', sans-serif;
+        }
+        .stChatMessage { 
+            background-color: rgba(0, 64, 128, 0.8);
+            border-radius: 15px;
+            padding: 15px;
+            border-left: 3px solid #FFD700;
+            margin: 5px 0;
+        }
+        h1 { 
+            color: #FFD700 !important; 
+            text-align: center;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            font-size: 2.5em !important;
+        }
+        h2, h3 {
+            color: #FFD700 !important;
+        }
+        .stCaption { 
+            color: #FFD700 !important; 
+            text-align: center;
+            font-size: 1.1em !important;
+        }
+        .stChatMessage p { color: white !important; }
+        
+        section[data-testid="stSidebar"] { 
+            background: linear-gradient(180deg, #001133 0%, #002244 100%);
+            border-right: 2px solid #FFD700;
+        }
+        section[data-testid="stSidebar"] h2 { color: #FFD700 !important; }
+        section[data-testid="stSidebar"] p { color: white !important; }
+        
+        .stButton button {
+            background: linear-gradient(90deg, #004080, #002244);
+            color: #FFD700;
+            border: 1px solid #FFD700;
+            border-radius: 10px;
+            width: 100%;
+            margin: 3px 0;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        .stButton button:hover {
+            background: linear-gradient(90deg, #FFD700, #FFA500);
+            color: #003366;
+            transform: scale(1.02);
+            box-shadow: 0 4px 15px rgba(255, 215, 0, 0.4);
+        }
+        .stTextInput input {
+            background-color: #004080;
+            color: white;
+            border: 1px solid #FFD700;
+            border-radius: 10px;
+        }
+        .stSelectbox div {
+            background-color: #004080;
+            color: white;
+            border: 1px solid #FFD700;
+        }
+        .stNumberInput input {
+            background-color: #004080;
+            color: white;
+            border: 1px solid #FFD700;
+        }
+        .stTabs [data-baseweb="tab-list"] {
+            background-color: #002244;
+            border-radius: 10px;
+            padding: 5px;
+        }
+        .stTabs [data-baseweb="tab"] {
+            color: #FFD700 !important;
+            font-weight: bold;
+        }
+        .stTabs [aria-selected="true"] {
+            background-color: #004080 !important;
+            border-radius: 8px;
+        }
+        div[data-testid="stExpander"] {
+            background-color: rgba(0, 64, 128, 0.5);
+            border: 1px solid #FFD700;
+            border-radius: 10px;
+        }
+        .stAlert {
+            border-radius: 10px;
+        }
+    </style>
+""", unsafe_allow_html=True)
 """, unsafe_allow_html=True)
 
 client = Groq(api_key=st.secrets["GROQ_API_KEY"])
@@ -238,7 +331,12 @@ Estoy aquí para ayudarle con sus consultas tributarias. Puede preguntarme sobre
 
 ¿En qué le puedo ayudar hoy?"""
         st.session_state.mensajes.append({"role": "assistant", "content": bienvenida})
-
+# Botón limpiar chat
+col_limpiar = st.columns([4, 1])
+with col_limpiar[1]:
+    if st.button("🗑️ Limpiar chat"):
+        st.session_state.mensajes = []
+        st.rerun()
     st.markdown("### 💬 Preguntas Frecuentes")
     preguntas = [
         "¿Cuáles son los requisitos para obtener el RIF?",
@@ -593,6 +691,7 @@ st.markdown("""
     📍 Venezuela
 </div>
 """, unsafe_allow_html=True)
+
 
 
 
