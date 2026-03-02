@@ -109,20 +109,64 @@ Estoy aquí para ayudarle con sus consultas tributarias. Puede preguntarme sobre
 
     if entrada := st.chat_input("¿En qué le podemos ayudar?"):
         pregunta_actual = entrada
-st.markdown("### 💬 Preguntas Frecuentes")
-    preguntas = [
-        "¿Cuáles son los requisitos para obtener el RIF?",
-        "¿Cómo declaro el IVA en el portal del SENIAT?",
-        "¿Cuándo vence la declaración de ISLR?",
-        "¿Qué es un contribuyente especial?",
-        "¿Cómo obtengo la solvencia tributaria?",
-        "¿Cuáles son las sanciones por no declarar a tiempo?",
-        "¿Cómo recupero mi clave del portal SENIAT?",
-        "¿Cuál es el porcentaje del IVA en Venezuela?",
-    ]
+st.markdown("### 💬 Preguntas Frecuentes por Tema")
+
+    temas = {
+        "📋 RIF": [
+            "¿Cuales son los requisitos para obtener el RIF?",
+            "¿Como actualizo mis datos del RIF?",
+            "¿Que hago si perdi mi RIF?",
+            "¿Cuanto tiempo tarda obtener el RIF?",
+        ],
+        "💰 IVA": [
+            "¿Cual es el porcentaje del IVA en Venezuela?",
+            "¿Como declaro el IVA en el portal del SENIAT?",
+            "¿Cuando vence la declaracion de IVA?",
+            "¿Que es el debito y credito fiscal?",
+        ],
+        "📊 ISLR": [
+            "¿Cuando vence la declaracion de ISLR?",
+            "¿Quienes deben declarar ISLR?",
+            "¿Que deducciones puedo aplicar en el ISLR?",
+            "¿Como calculo el ISLR?",
+        ],
+        "✂️ Retenciones": [
+            "¿Que es una retencion de IVA?",
+            "¿Cuales son los porcentajes de retencion de IVA?",
+            "¿Como entero las retenciones?",
+            "¿Que es un comprobante de retencion?",
+        ],
+        "⭐ Contribuyentes Especiales": [
+            "¿Que es un contribuyente especial?",
+            "¿Como se si soy contribuyente especial?",
+            "¿Cuales son mis obligaciones como especial?",
+            "¿Cual es el calendario de contribuyentes especiales?",
+        ],
+        "✅ Solvencia": [
+            "¿Como obtengo la solvencia tributaria?",
+            "¿Cuanto tiempo tarda la solvencia?",
+            "¿Para que tramites necesito la solvencia?",
+            "¿Cuanto tiempo tiene vigencia la solvencia?",
+        ],
+        "⚠️ Sanciones": [
+            "¿Cuales son las sanciones por no declarar a tiempo?",
+            "¿Como pago una multa del SENIAT?",
+            "¿Que es el recurso jerarquico?",
+            "¿Como regularizo una deuda con el SENIAT?",
+        ],
+        "🖥️ Portal SENIAT": [
+            "¿Como me registro en el portal del SENIAT?",
+            "¿Como recupero mi clave del portal?",
+            "¿Que tramites puedo hacer en linea?",
+            "¿Como descargo mis declaraciones anteriores?",
+        ],
+    }
+
+    tema_seleccionado = st.selectbox("Selecciona un tema:", list(temas.keys()))
+    preguntas_tema = temas[tema_seleccionado]
 
     col1, col2 = st.columns(2)
-    for i, pregunta in enumerate(preguntas):
+    for i, pregunta in enumerate(preguntas_tema):
         if i % 2 == 0:
             with col1:
                 if st.button(pregunta, key=f"btn_{i}"):
@@ -131,6 +175,7 @@ st.markdown("### 💬 Preguntas Frecuentes")
             with col2:
                 if st.button(pregunta, key=f"btn_{i}"):
                     st.session_state.pregunta_rapida = pregunta
+  
     if pregunta_actual:
         st.session_state.mensajes.append({"role": "user", "content": pregunta_actual})
         with st.chat_message("user"):
@@ -455,4 +500,5 @@ st.markdown("""
     📍 Venezuela
 </div>
 """, unsafe_allow_html=True)
+
 
