@@ -346,6 +346,7 @@ with tab4:
         for termino, definicion in sorted(terminos.items()):
             with st.expander(f"📌 {termino}"):
                 st.write(definicion)
+                
 st.markdown("---")
 st.markdown("""
 <div style='text-align: center; color: #FFD700;'>
@@ -355,5 +356,6 @@ st.markdown("""
     📍 Venezuela
 </div>
 """, unsafe_allow_html=True)
+
 
 
