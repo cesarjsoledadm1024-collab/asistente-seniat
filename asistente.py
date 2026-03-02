@@ -8,26 +8,123 @@ st.set_page_config(
     page_icon="🏛️",
     layout="wide"
 )
-
 st.markdown("""
 <style>
-.stApp { background-color: #003366; }
-.stChatMessage { background-color: #004080; border-radius: 15px; padding: 15px; border-left: 3px solid #FFD700; margin: 5px 0; }
-h1 { color: #FFD700 !important; text-align: center; }
-h2, h3 { color: #FFD700 !important; }
-.stCaption { color: #FFD700 !important; text-align: center; }
-.stChatMessage p { color: white !important; }
-section[data-testid="stSidebar"] { background-color: #002244; border-right: 2px solid #FFD700; }
-section[data-testid="stSidebar"] h2 { color: #FFD700 !important; }
-section[data-testid="stSidebar"] p { color: white !important; }
-.stButton button { background-color: #004080; color: #FFD700; border: 1px solid #FFD700; border-radius: 10px; width: 100%; margin: 3px 0; font-weight: bold; }
-.stButton button:hover { background-color: #FFD700; color: #003366; }
-.stTabs [data-baseweb="tab-list"] { background-color: #002244; border-radius: 10px; padding: 5px; }
-.stTabs [data-baseweb="tab"] { color: #FFD700 !important; font-weight: bold; }
-.stTabs [aria-selected="true"] { background-color: #004080 !important; border-radius: 8px; }
-div[data-testid="stExpander"] { background-color: rgba(0,64,128,0.5); border: 1px solid #FFD700; border-radius: 10px; }
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+
+* { font-family: 'Inter', sans-serif; }
+
+.stApp {
+    background: #0a0f1e;
+}
+
+section[data-testid="stSidebar"] {
+    background: #0d1426;
+    border-right: 1px solid rgba(255,215,0,0.2);
+}
+section[data-testid="stSidebar"] h2 { color: #FFD700 !important; font-weight: 300; letter-spacing: 2px; }
+section[data-testid="stSidebar"] p { color: #8892a4 !important; }
+section[data-testid="stSidebar"] a { color: #FFD700 !important; }
+
+h1 {
+    color: #ffffff !important;
+    text-align: center;
+    font-weight: 700;
+    font-size: 2.2em !important;
+    letter-spacing: 1px;
+}
+h2, h3 { color: #FFD700 !important; font-weight: 400; }
+.stCaption { color: #8892a4 !important; text-align: center; font-size: 0.9em !important; letter-spacing: 3px; text-transform: uppercase; }
+
+.stChatMessage {
+    background: rgba(255,255,255,0.03) !important;
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 12px;
+    padding: 16px;
+    margin: 6px 0;
+    backdrop-filter: blur(10px);
+}
+.stChatMessage p { color: #e2e8f0 !important; line-height: 1.7; }
+
+.stButton button {
+    background: rgba(255,215,0,0.05);
+    color: #e2e8f0;
+    border: 1px solid rgba(255,215,0,0.2);
+    border-radius: 8px;
+    width: 100%;
+    margin: 3px 0;
+    font-weight: 400;
+    font-size: 0.85em;
+    transition: all 0.2s ease;
+    text-align: left;
+    padding: 8px 12px;
+}
+.stButton button:hover {
+    background: rgba(255,215,0,0.1);
+    border-color: rgba(255,215,0,0.5);
+    color: #FFD700;
+    transform: translateX(3px);
+}
+
+.stTabs [data-baseweb="tab-list"] {
+    background: rgba(255,255,255,0.02);
+    border-radius: 10px;
+    padding: 4px;
+    border: 1px solid rgba(255,255,255,0.05);
+    gap: 2px;
+}
+.stTabs [data-baseweb="tab"] {
+    color: #8892a4 !important;
+    font-weight: 400;
+    font-size: 0.85em;
+    border-radius: 8px;
+    padding: 8px 16px;
+}
+.stTabs [aria-selected="true"] {
+    background: rgba(255,215,0,0.1) !important;
+    color: #FFD700 !important;
+    font-weight: 600;
+}
+
+.stSelectbox > div > div {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.1);
+    color: #e2e8f0;
+    border-radius: 8px;
+}
+.stNumberInput input, .stTextInput input {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.1);
+    color: #e2e8f0;
+    border-radius: 8px;
+}
+
+div[data-testid="stExpander"] {
+    background: rgba(255,255,255,0.02);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 10px;
+}
+
+.stAlert {
+    border-radius: 10px;
+    border: none;
+}
+.stInfo { background: rgba(59,130,246,0.1) !important; color: #93c5fd !important; }
+.stSuccess { background: rgba(34,197,94,0.1) !important; color: #86efac !important; }
+.stWarning { background: rgba(234,179,8,0.1) !important; color: #fde047 !important; }
+.stError { background: rgba(239,68,68,0.1) !important; color: #fca5a5 !important; }
+
+.stMarkdown hr { border-color: rgba(255,255,255,0.06); }
+
+div[data-testid="stChatInput"] textarea {
+    background: rgba(255,255,255,0.03) !important;
+    border: 1px solid rgba(255,215,0,0.2) !important;
+    color: #e2e8f0 !important;
+    border-radius: 12px !important;
+}
 </style>
 """, unsafe_allow_html=True)
+
 
 client = Groq(api_key=st.secrets["GROQ_API_KEY"])
 
@@ -367,3 +464,4 @@ st.markdown("""
     📍 Venezuela
 </div>
 """, unsafe_allow_html=True)
+
