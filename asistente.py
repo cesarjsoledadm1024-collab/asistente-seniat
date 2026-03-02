@@ -71,94 +71,78 @@ tab1, tab2, tab3, tab4, tab5, tab6 = st.tabs([
     "🧮 Calculadora",
     "📅 Fechas",
     "📖 Glosario",
-    "📋 Guías",
+    "📋 Guias",
     "🔍 Verificar RIF"
 ])
 
 with tab1:
     if "mensajes" not in st.session_state:
         st.session_state.mensajes = []
-        bienvenida = """¡Bienvenido al Asistente Virtual del SENIAT! 🏛️
+        bienvenida = """Bienvenido al Asistente Virtual del SENIAT!
 
-Estoy aquí para ayudarle con sus consultas tributarias. Puede preguntarme sobre:
+Estoy aqui para ayudarle con sus consultas tributarias. Puede preguntarme sobre:
 
-✅ Registro de RIF  ✅ Declaraciones de IVA e ISLR  ✅ Retenciones
-✅ Contribuyentes Especiales  ✅ Solvencia Tributaria  ✅ Sanciones y Recursos
+RIF, IVA, ISLR, Retenciones, Contribuyentes Especiales, Solvencia Tributaria, Sanciones
 
-¿En qué le puedo ayudar hoy?"""
+En que le puedo ayudar hoy?"""
         st.session_state.mensajes.append({"role": "assistant", "content": bienvenida})
 
     col_a, col_b = st.columns([4, 1])
     with col_b:
-        if st.button("🗑️ Limpiar chat"):
+        if st.button("Limpiar chat"):
             st.session_state.mensajes = []
             st.rerun()
 
-    
-
-    st.markdown("---")
-
-    for msg in st.session_state.mensajes:
-        with st.chat_message(msg["role"]):
-            st.write(msg["content"])
-
-    pregunta_actual = None
-    if "pregunta_rapida" in st.session_state and st.session_state.pregunta_rapida:
-        pregunta_actual = st.session_state.pregunta_rapida
-        st.session_state.pregunta_rapida = None
-
-    if entrada := st.chat_input("¿En qué le podemos ayudar?"):
-        pregunta_actual = entrada
-st.markdown("### 💬 Preguntas Frecuentes por Tema")
+    st.markdown("### Preguntas Frecuentes por Tema")
 
     temas = {
-        "📋 RIF": [
-            "¿Cuales son los requisitos para obtener el RIF?",
-            "¿Como actualizo mis datos del RIF?",
-            "¿Que hago si perdi mi RIF?",
-            "¿Cuanto tiempo tarda obtener el RIF?",
+        "RIF": [
+            "Cuales son los requisitos para obtener el RIF?",
+            "Como actualizo mis datos del RIF?",
+            "Que hago si perdi mi RIF?",
+            "Cuanto tiempo tarda obtener el RIF?",
         ],
-        "💰 IVA": [
-            "¿Cual es el porcentaje del IVA en Venezuela?",
-            "¿Como declaro el IVA en el portal del SENIAT?",
-            "¿Cuando vence la declaracion de IVA?",
-            "¿Que es el debito y credito fiscal?",
+        "IVA": [
+            "Cual es el porcentaje del IVA en Venezuela?",
+            "Como declaro el IVA en el portal del SENIAT?",
+            "Cuando vence la declaracion de IVA?",
+            "Que es el debito y credito fiscal?",
         ],
-        "📊 ISLR": [
-            "¿Cuando vence la declaracion de ISLR?",
-            "¿Quienes deben declarar ISLR?",
-            "¿Que deducciones puedo aplicar en el ISLR?",
-            "¿Como calculo el ISLR?",
+        "ISLR": [
+            "Cuando vence la declaracion de ISLR?",
+            "Quienes deben declarar ISLR?",
+            "Que deducciones puedo aplicar en el ISLR?",
+            "Como calculo el ISLR?",
         ],
-        "✂️ Retenciones": [
-            "¿Que es una retencion de IVA?",
-            "¿Cuales son los porcentajes de retencion de IVA?",
-            "¿Como entero las retenciones?",
-            "¿Que es un comprobante de retencion?",
+        "Retenciones": [
+            "Que es una retencion de IVA?",
+            "Cuales son los porcentajes de retencion de IVA?",
+            "Como entero las retenciones?",
+            "Que es un comprobante de retencion?",
         ],
-        "⭐ Contribuyentes Especiales": [
-            "¿Que es un contribuyente especial?",
-            "¿Como se si soy contribuyente especial?",
-            "¿Cuales son mis obligaciones como especial?",
-            "¿Cual es el calendario de contribuyentes especiales?",
+        "Contribuyentes Especiales": [
+            "Que es un contribuyente especial?",
+            "Como se si soy contribuyente especial?",
+            "Cuales son mis obligaciones como especial?",
+            "Cual es el calendario de contribuyentes especiales?",
         ],
-        "✅ Solvencia": [
-            "¿Como obtengo la solvencia tributaria?",
-            "¿Cuanto tiempo tarda la solvencia?",
-            "¿Para que tramites necesito la solvencia?",
-            "¿Cuanto tiempo tiene vigencia la solvencia?",
+        "Solvencia": [
+            "Como obtengo la solvencia tributaria?",
+            "Cuanto tiempo tarda la solvencia?",
+            "Para que tramites necesito la solvencia?",
+            "Cuanto tiempo tiene vigencia la solvencia?",
         ],
-        "⚠️ Sanciones": [
-            "¿Cuales son las sanciones por no declarar a tiempo?",
-            "¿Como pago una multa del SENIAT?",
-            "¿Que es el recurso jerarquico?",
-            "¿Como regularizo una deuda con el SENIAT?",
+        "Sanciones": [
+            "Cuales son las sanciones por no declarar a tiempo?",
+            "Como pago una multa del SENIAT?",
+            "Que es el recurso jerarquico?",
+            "Como regularizo una deuda con el SENIAT?",
         ],
-        "🖥️ Portal SENIAT": [
-            "¿Como me registro en el portal del SENIAT?",
-            "¿Como recupero mi clave del portal?",
-            "¿Que tramites puedo hacer en linea?",
-            "¿Como descargo mis declaraciones anteriores?",
+        "Portal SENIAT": [
+            "Como me registro en el portal del SENIAT?",
+            "Como recupero mi clave del portal?",
+            "Que tramites puedo hacer en linea?",
+            "Como descargo mis declaraciones anteriores?",
         ],
     }
 
@@ -175,7 +159,21 @@ st.markdown("### 💬 Preguntas Frecuentes por Tema")
             with col2:
                 if st.button(pregunta, key=f"btn_{i}"):
                     st.session_state.pregunta_rapida = pregunta
-  
+
+    st.markdown("---")
+
+    for msg in st.session_state.mensajes:
+        with st.chat_message(msg["role"]):
+            st.write(msg["content"])
+
+    pregunta_actual = None
+    if "pregunta_rapida" in st.session_state and st.session_state.pregunta_rapida:
+        pregunta_actual = st.session_state.pregunta_rapida
+        st.session_state.pregunta_rapida = None
+
+    if entrada := st.chat_input("En que le podemos ayudar?"):
+        pregunta_actual = entrada
+
     if pregunta_actual:
         st.session_state.mensajes.append({"role": "user", "content": pregunta_actual})
         with st.chat_message("user"):
@@ -200,11 +198,11 @@ st.markdown("### 💬 Preguntas Frecuentes por Tema")
         st.rerun()
 
 with tab2:
-    st.markdown("## 🧮 Calculadora Tributaria")
+    st.markdown("## Calculadora Tributaria")
     st.markdown("---")
     calc_tipo = st.selectbox("Selecciona el impuesto:", ["IVA (16%)", "Retencion IVA 75%", "Retencion IVA 100%", "ISLR (estimado)"])
     monto = st.number_input("Monto en Bolivares (Bs):", min_value=0.0, format="%.2f")
-    if st.button("🔢 Calcular"):
+    if st.button("Calcular"):
         if monto > 0:
             if calc_tipo == "IVA (16%)":
                 impuesto = monto * 0.16
@@ -232,7 +230,7 @@ with tab2:
             st.warning("Ingresa un monto mayor a 0")
 
 with tab3:
-    st.markdown("## 📅 Fechas de Declaracion")
+    st.markdown("## Fechas de Declaracion")
     st.markdown("---")
     hoy = datetime.now()
     st.markdown(f"### Hoy es: {hoy.strftime('%d/%m/%Y')}")
@@ -256,9 +254,9 @@ with tab3:
     st.error("Consecuencias por declarar fuera de tiempo: Multa de 10 UT por mes de retraso, intereses moratorios y posible cierre del establecimiento.")
 
 with tab4:
-    st.markdown("## 📖 Glosario Tributario SENIAT")
+    st.markdown("## Glosario Tributario SENIAT")
     st.markdown("---")
-    buscar = st.text_input("🔍 Buscar termino:", placeholder="Escribe un termino tributario...")
+    buscar = st.text_input("Buscar termino:", placeholder="Escribe un termino tributario...")
     terminos = {
         "IVA": "Impuesto al Valor Agregado: Impuesto indirecto que grava la venta de bienes y servicios. Tasa general 16%.",
         "ISLR": "Impuesto Sobre la Renta: Impuesto directo que grava los enriquecimientos netos de personas naturales y juridicas.",
@@ -294,7 +292,7 @@ with tab4:
                 st.write(definicion)
 
 with tab5:
-    st.markdown("## 📋 Guias Paso a Paso de Tramites")
+    st.markdown("## Guias Paso a Paso de Tramites")
     st.markdown("---")
     tramite = st.selectbox("Selecciona el tramite:", [
         "Obtener el RIF por primera vez",
@@ -313,151 +311,20 @@ with tab5:
         "Declarar Retenciones de ISLR",
     ])
     pasos_dict = {
-        "Obtener el RIF por primera vez": [
-            "Ingresa al portal www.seniat.gob.ve",
-            "Haz clic en Sistemas en Linea",
-            "Selecciona Registro de Contribuyentes",
-            "Completa el formulario con tus datos personales",
-            "Adjunta copia de Cedula de Identidad vigente",
-            "Adjunta comprobante de domicilio",
-            "Envia la solicitud y anota el numero de expediente",
-            "Acude a la oficina del SENIAT con los documentos originales",
-            "Retira tu RIF en 3 a 5 dias habiles",
-        ],
-        "Actualizar datos del RIF": [
-            "Ingresa al portal www.seniat.gob.ve",
-            "Inicia sesion con tu usuario y clave",
-            "Ve a Actualizacion de Datos",
-            "Modifica los datos que necesitas actualizar",
-            "Adjunta los documentos que soporten el cambio",
-            "Confirma los cambios y guarda",
-            "Imprime el comprobante de actualizacion",
-        ],
-        "Declarar IVA en el portal": [
-            "Ingresa al portal www.seniat.gob.ve",
-            "Inicia sesion con tu RIF y clave",
-            "Selecciona Declaracion y Pago de IVA",
-            "Elige el periodo a declarar",
-            "Ingresa el total de ventas del mes",
-            "Ingresa el total de compras del mes",
-            "El sistema calcula el IVA a pagar",
-            "Verifica los montos y confirma",
-            "Realiza el pago en el banco autorizado",
-            "Guarda el comprobante",
-        ],
-        "Declarar ISLR anual": [
-            "Reune todos tus comprobantes de ingresos del año",
-            "Reune las retenciones de ISLR que te realizaron",
-            "Ingresa al portal www.seniat.gob.ve",
-            "Selecciona Declaracion de ISLR",
-            "Elige el ejercicio fiscal a declarar",
-            "Ingresa todos tus ingresos anuales",
-            "Ingresa tus deducciones permitidas",
-            "El sistema calcula el impuesto",
-            "Confirma y envia la declaracion",
-            "Realiza el pago si corresponde",
-            "Guarda el comprobante",
-        ],
-        "Obtener Solvencia Tributaria": [
-            "Verifica que estes al dia con todas tus declaraciones",
-            "Verifica que no tengas deudas con el SENIAT",
-            "Ingresa al portal www.seniat.gob.ve",
-            "Inicia sesion con tu RIF y clave",
-            "Selecciona Solvencia Tributaria",
-            "Haz clic en Solicitar Solvencia",
-            "El sistema verifica tu estatus automaticamente",
-            "Si estas solvente, descarga e imprime el documento",
-        ],
-        "Recuperar clave del portal SENIAT": [
-            "Ingresa al portal www.seniat.gob.ve",
-            "Haz clic en Olvidaste tu clave",
-            "Ingresa tu numero de RIF",
-            "Ingresa tu correo electronico registrado",
-            "Revisa tu correo y sigue las instrucciones",
-            "Si no tienes correo registrado, acude a la oficina del SENIAT con tu cedula",
-        ],
-        "Inscribirse como Contribuyente Especial": [
-            "El SENIAT te notifica mediante carta oficial",
-            "Recibes la notificacion de calificacion",
-            "Acude a la Gerencia Regional de Tributos Internos",
-            "Presenta tu RIF y cedula de identidad",
-            "Firma la notificacion de calificacion",
-            "A partir de ese momento cumples el calendario de Contribuyentes Especiales",
-        ],
-        "Interponer Recurso Jerarquico": [
-            "Lee detenidamente el acto administrativo del SENIAT",
-            "Tienes 25 dias habiles para interponer el recurso",
-            "Redacta el escrito del recurso con tus argumentos",
-            "Anexa todas las pruebas que soporten tu caso",
-            "Presenta el escrito en la oficina del SENIAT que emitio el acto",
-            "Solicita el sello de recibido en tu copia",
-            "El SENIAT tiene 60 dias habiles para responder",
-            "Si no responde se considera silencio administrativo negativo",
-            "Puedes acudir al Tribunal Contencioso Tributario si es necesario",
-        ],
-        "Emitir Facturas Fiscales": [
-            "Verifica que tu RIF este activo y vigente",
-            "Asegurate de tener una maquina fiscal o sistema autorizado",
-            "La factura debe contener: RIF, nombre o razon social, direccion fiscal",
-            "Incluye numero de control correlativo",
-            "Especifica descripcion del bien o servicio",
-            "Indica el monto gravable, alicuota y monto del impuesto",
-            "Entrega original al cliente y conserva la copia",
-            "Registra la factura en tu libro de ventas",
-        ],
-        "Solicitar Prorroga de Declaracion": [
-            "Ingresa al portal www.seniat.gob.ve",
-            "Inicia sesion con tu RIF y clave",
-            "Ve a la seccion de Solicitudes",
-            "Selecciona Prorroga de Declaracion",
-            "Indica el tipo de declaracion y el periodo",
-            "Explica el motivo de la solicitud",
-            "Adjunta documentos que justifiquen la prorroga",
-            "Envia la solicitud antes del vencimiento",
-            "Espera la respuesta del SENIAT por correo o portal",
-        ],
-        "Registrar una Maquina Fiscal": [
-            "Adquiere la maquina fiscal en un proveedor autorizado por el SENIAT",
-            "El proveedor debe instalar y activar la maquina",
-            "Ingresa al portal www.seniat.gob.ve",
-            "Selecciona Registro de Maquinas Fiscales",
-            "Ingresa el numero de serial de la maquina",
-            "Completa los datos del establecimiento",
-            "El SENIAT genera el certificado de registro",
-            "Conserva el certificado en el establecimiento",
-        ],
-        "Solicitar Reintegro de Impuestos": [
-            "Verifica que tienes creditos fiscales a tu favor",
-            "Reune todas las facturas que soportan el credito",
-            "Ingresa al portal www.seniat.gob.ve",
-            "Selecciona Solicitud de Reintegro",
-            "Completa el formulario con el monto a reintegrar",
-            "Adjunta los documentos soporte",
-            "El SENIAT tiene 60 dias para responder",
-            "Si aprueban, el reintegro se realiza mediante cheque o transferencia",
-        ],
-        "Cambiar Domicilio Fiscal": [
-            "Prepara el nuevo comprobante de domicilio",
-            "Ingresa al portal www.seniat.gob.ve",
-            "Inicia sesion con tu RIF y clave",
-            "Ve a Actualizacion de Datos del RIF",
-            "Modifica la direccion fiscal",
-            "Adjunta el comprobante del nuevo domicilio",
-            "Confirma los cambios",
-            "Imprime el nuevo RIF actualizado",
-        ],
-        "Declarar Retenciones de ISLR": [
-            "Reune todos los comprobantes de retenciones realizadas",
-            "Ingresa al portal www.seniat.gob.ve",
-            "Selecciona Declaracion de Retenciones de ISLR",
-            "Elige el periodo a declarar",
-            "Ingresa los datos de cada retencion realizada",
-            "Verifica los montos totales",
-            "Confirma y envia la declaracion",
-            "Realiza el enteramiento en el banco autorizado",
-            "Emite los comprobantes de retencion a cada proveedor",
-            "Guarda el comprobante de declaracion",
-        ],
+        "Obtener el RIF por primera vez": ["Ingresa al portal www.seniat.gob.ve","Haz clic en Sistemas en Linea","Selecciona Registro de Contribuyentes","Completa el formulario con tus datos personales","Adjunta copia de Cedula de Identidad vigente","Adjunta comprobante de domicilio","Envia la solicitud y anota el numero de expediente","Acude a la oficina del SENIAT con los documentos originales","Retira tu RIF en 3 a 5 dias habiles"],
+        "Actualizar datos del RIF": ["Ingresa al portal www.seniat.gob.ve","Inicia sesion con tu usuario y clave","Ve a Actualizacion de Datos","Modifica los datos que necesitas actualizar","Adjunta los documentos que soporten el cambio","Confirma los cambios y guarda","Imprime el comprobante de actualizacion"],
+        "Declarar IVA en el portal": ["Ingresa al portal www.seniat.gob.ve","Inicia sesion con tu RIF y clave","Selecciona Declaracion y Pago de IVA","Elige el periodo a declarar","Ingresa el total de ventas del mes","Ingresa el total de compras del mes","El sistema calcula el IVA a pagar","Verifica los montos y confirma","Realiza el pago en el banco autorizado","Guarda el comprobante"],
+        "Declarar ISLR anual": ["Reune todos tus comprobantes de ingresos del año","Reune las retenciones de ISLR que te realizaron","Ingresa al portal www.seniat.gob.ve","Selecciona Declaracion de ISLR","Elige el ejercicio fiscal a declarar","Ingresa todos tus ingresos anuales","Ingresa tus deducciones permitidas","El sistema calcula el impuesto","Confirma y envia la declaracion","Realiza el pago si corresponde","Guarda el comprobante"],
+        "Obtener Solvencia Tributaria": ["Verifica que estes al dia con todas tus declaraciones","Verifica que no tengas deudas con el SENIAT","Ingresa al portal www.seniat.gob.ve","Inicia sesion con tu RIF y clave","Selecciona Solvencia Tributaria","Haz clic en Solicitar Solvencia","El sistema verifica tu estatus automaticamente","Si estas solvente, descarga e imprime el documento"],
+        "Recuperar clave del portal SENIAT": ["Ingresa al portal www.seniat.gob.ve","Haz clic en Olvidaste tu clave","Ingresa tu numero de RIF","Ingresa tu correo electronico registrado","Revisa tu correo y sigue las instrucciones","Si no tienes correo registrado, acude a la oficina del SENIAT con tu cedula"],
+        "Inscribirse como Contribuyente Especial": ["El SENIAT te notifica mediante carta oficial","Recibes la notificacion de calificacion","Acude a la Gerencia Regional de Tributos Internos","Presenta tu RIF y cedula de identidad","Firma la notificacion de calificacion","A partir de ese momento cumples el calendario de Contribuyentes Especiales"],
+        "Interponer Recurso Jerarquico": ["Lee detenidamente el acto administrativo del SENIAT","Tienes 25 dias habiles para interponer el recurso","Redacta el escrito del recurso con tus argumentos","Anexa todas las pruebas que soporten tu caso","Presenta el escrito en la oficina del SENIAT que emitio el acto","Solicita el sello de recibido en tu copia","El SENIAT tiene 60 dias habiles para responder","Si no responde se considera silencio administrativo negativo","Puedes acudir al Tribunal Contencioso Tributario si es necesario"],
+        "Emitir Facturas Fiscales": ["Verifica que tu RIF este activo y vigente","Asegurate de tener una maquina fiscal o sistema autorizado","La factura debe contener RIF, nombre o razon social, direccion fiscal","Incluye numero de control correlativo","Especifica descripcion del bien o servicio","Indica el monto gravable, alicuota y monto del impuesto","Entrega original al cliente y conserva la copia","Registra la factura en tu libro de ventas"],
+        "Solicitar Prorroga de Declaracion": ["Ingresa al portal www.seniat.gob.ve","Inicia sesion con tu RIF y clave","Ve a la seccion de Solicitudes","Selecciona Prorroga de Declaracion","Indica el tipo de declaracion y el periodo","Explica el motivo de la solicitud","Adjunta documentos que justifiquen la prorroga","Envia la solicitud antes del vencimiento","Espera la respuesta del SENIAT por correo o portal"],
+        "Registrar una Maquina Fiscal": ["Adquiere la maquina fiscal en un proveedor autorizado por el SENIAT","El proveedor debe instalar y activar la maquina","Ingresa al portal www.seniat.gob.ve","Selecciona Registro de Maquinas Fiscales","Ingresa el numero de serial de la maquina","Completa los datos del establecimiento","El SENIAT genera el certificado de registro","Conserva el certificado en el establecimiento"],
+        "Solicitar Reintegro de Impuestos": ["Verifica que tienes creditos fiscales a tu favor","Reune todas las facturas que soportan el credito","Ingresa al portal www.seniat.gob.ve","Selecciona Solicitud de Reintegro","Completa el formulario con el monto a reintegrar","Adjunta los documentos soporte","El SENIAT tiene 60 dias para responder","Si aprueban, el reintegro se realiza mediante cheque o transferencia"],
+        "Cambiar Domicilio Fiscal": ["Prepara el nuevo comprobante de domicilio","Ingresa al portal www.seniat.gob.ve","Inicia sesion con tu RIF y clave","Ve a Actualizacion de Datos del RIF","Modifica la direccion fiscal","Adjunta el comprobante del nuevo domicilio","Confirma los cambios","Imprime el nuevo RIF actualizado"],
+        "Declarar Retenciones de ISLR": ["Reune todos los comprobantes de retenciones realizadas","Ingresa al portal www.seniat.gob.ve","Selecciona Declaracion de Retenciones de ISLR","Elige el periodo a declarar","Ingresa los datos de cada retencion realizada","Verifica los montos totales","Confirma y envia la declaracion","Realiza el enteramiento en el banco autorizado","Emite los comprobantes de retencion a cada proveedor","Guarda el comprobante de declaracion"],
     }
     pasos = pasos_dict.get(tramite, [])
     for i, paso in enumerate(pasos, 1):
@@ -468,7 +335,7 @@ with tab5:
         st.warning("Vigencia: La solvencia tiene una validez de 6 meses")
 
 with tab6:
-    st.markdown("## 🔍 Verificar Formato de RIF")
+    st.markdown("## Verificar Formato de RIF")
     st.markdown("---")
     st.markdown("""
 | Tipo | Formato | Ejemplo |
@@ -480,12 +347,12 @@ with tab6:
 | Pasaporte | P-XXXXXXXX-X | P-12345678-9 |
     """)
     rif = st.text_input("Ingresa el RIF:", placeholder="Ejemplo: V-12345678-9", max_chars=13).upper().strip()
-    if st.button("🔍 Verificar RIF"):
+    if st.button("Verificar RIF"):
         if rif:
             patron = r'^[VJGEP]-\d{8}-\d$'
             if re.match(patron, rif):
                 tipos = {"V": "Persona Natural Venezolana", "J": "Persona Juridica", "G": "Organismo Gubernamental", "E": "Persona Natural Extranjera", "P": "Persona con Pasaporte"}
-                st.success(f"RIF VALIDO\nRIF: {rif}\nTipo: {tipos.get(rif[0], 'Desconocido')}")
+                st.success(f"RIF VALIDO - {rif} - Tipo: {tipos.get(rif[0], 'Desconocido')}")
                 st.info("Esta herramienta verifica el formato. Para verificar si el RIF esta activo visita www.seniat.gob.ve")
             else:
                 st.error("RIF NO VALIDO. Formato correcto: X-XXXXXXXX-X (Ejemplo: V-12345678-9)")
@@ -500,5 +367,3 @@ st.markdown("""
     📍 Venezuela
 </div>
 """, unsafe_allow_html=True)
-
-
