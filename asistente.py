@@ -73,7 +73,7 @@ st.title("🏛️ Asistente Virtual SENIAT")
 st.caption("Atención al contribuyente - Consultas tributarias")
 
 # Pestañas
-tab1, tab2, tab3, tab4, tab5 = st.tabs(["💬 Asistente", "🧮 Calculadora", "📅 Fechas de Declaración", "📖 Glosario", "🔍 Consulta RIF"])
+tab1, tab2, tab3, tab4, tab5 = st.tabs(["💬 Asistente", "🧮 Calculadora", "📅 Fechas de Declaración", "📖 Glosario", "📋 Guías de Trámites"])
 
 with tab3:
     st.markdown("## 📅 Fechas de Declaración")
@@ -435,6 +435,153 @@ with tab5:
            - Comprobante de domicilio
         5. Recibe tu RIF en el momento
         """)
+with tab5:
+    st.markdown("## 📋 Guías Paso a Paso de Trámites")
+    st.markdown("---")
+
+    tramite = st.selectbox(
+        "Selecciona el trámite que deseas realizar:",
+        [
+            "Obtener el RIF por primera vez",
+            "Actualizar datos del RIF",
+            "Declarar IVA en el portal",
+            "Declarar ISLR anual",
+            "Obtener Solvencia Tributaria",
+            "Recuperar clave del portal SENIAT",
+            "Inscribirse como Contribuyente Especial",
+            "Interponer Recurso Jerárquico",
+        ]
+    )
+
+    if tramite == "Obtener el RIF por primera vez":
+        st.markdown("### 📌 Cómo obtener el RIF por primera vez")
+        st.success("**Personas Naturales:**")
+        pasos = [
+            "Ingresa al portal www.seniat.gob.ve",
+            "Haz clic en 'Sistemas en Línea'",
+            "Selecciona 'Registro de Contribuyentes'",
+            "Completa el formulario con tus datos personales",
+            "Adjunta copia de Cédula de Identidad vigente",
+            "Adjunta comprobante de domicilio (factura de servicios)",
+            "Envía la solicitud y anota el número de expediente",
+            "Acude a la oficina del SENIAT más cercana con los documentos originales",
+            "Retira tu RIF en un plazo de 3 a 5 días hábiles",
+        ]
+        for i, paso in enumerate(pasos, 1):
+            st.markdown(f"**Paso {i}:** {paso}")
+
+        st.warning("**Documentos necesarios:**\n- Cédula de Identidad original y copia\n- Comprobante de domicilio\n- Partida de nacimiento (menores de edad)")
+
+    elif tramite == "Actualizar datos del RIF":
+        st.markdown("### 📌 Cómo actualizar datos del RIF")
+        pasos = [
+            "Ingresa al portal www.seniat.gob.ve",
+            "Inicia sesión con tu usuario y clave",
+            "Ve a 'Actualización de Datos'",
+            "Modifica los datos que necesitas actualizar",
+            "Adjunta los documentos que soporten el cambio",
+            "Confirma los cambios y guarda",
+            "Imprime el comprobante de actualización",
+        ]
+        for i, paso in enumerate(pasos, 1):
+            st.markdown(f"**Paso {i}:** {paso}")
+
+    elif tramite == "Declarar IVA en el portal":
+        st.markdown("### 📌 Cómo declarar el IVA en el portal")
+        pasos = [
+            "Ingresa al portal www.seniat.gob.ve",
+            "Inicia sesión con tu RIF y clave",
+            "Selecciona 'Declaración y Pago de IVA'",
+            "Elige el período a declarar (mes y año)",
+            "Ingresa el total de ventas del mes",
+            "Ingresa el total de compras del mes",
+            "El sistema calcula automáticamente el IVA a pagar",
+            "Verifica los montos y confirma la declaración",
+            "Realiza el pago en el banco autorizado",
+            "Guarda el comprobante de declaración y pago",
+        ]
+        for i, paso in enumerate(pasos, 1):
+            st.markdown(f"**Paso {i}:** {paso}")
+        st.info("⏰ **Plazo:** Dentro de los 15 días hábiles del mes siguiente")
+
+    elif tramite == "Declarar ISLR anual":
+        st.markdown("### 📌 Cómo declarar el ISLR anual")
+        pasos = [
+            "Reúne todos tus comprobantes de ingresos del año",
+            "Reúne las retenciones de ISLR que te realizaron",
+            "Ingresa al portal www.seniat.gob.ve",
+            "Selecciona 'Declaración de ISLR'",
+            "Elige el ejercicio fiscal a declarar",
+            "Ingresa todos tus ingresos anuales",
+            "Ingresa tus deducciones permitidas",
+            "El sistema calcula el impuesto a pagar",
+            "Confirma y envía la declaración",
+            "Realiza el pago si corresponde",
+            "Guarda el comprobante",
+        ]
+        for i, paso in enumerate(pasos, 1):
+            st.markdown(f"**Paso {i}:** {paso}")
+        st.info("⏰ **Plazo:** Personas Naturales hasta el 31 de Marzo de cada año")
+
+    elif tramite == "Obtener Solvencia Tributaria":
+        st.markdown("### 📌 Cómo obtener la Solvencia Tributaria")
+        pasos = [
+            "Verifica que estés al día con todas tus declaraciones",
+            "Verifica que no tengas deudas pendientes con el SENIAT",
+            "Ingresa al portal www.seniat.gob.ve",
+            "Inicia sesión con tu RIF y clave",
+            "Selecciona 'Solvencia Tributaria'",
+            "Haz clic en 'Solicitar Solvencia'",
+            "El sistema verifica tu estatus automáticamente",
+            "Si estás solvente, descarga e imprime el documento",
+        ]
+        for i, paso in enumerate(pasos, 1):
+            st.markdown(f"**Paso {i}:** {paso}")
+        st.warning("⚠️ **Vigencia:** La solvencia tiene una validez de 6 meses")
+
+    elif tramite == "Recuperar clave del portal SENIAT":
+        st.markdown("### 📌 Cómo recuperar tu clave del portal")
+        pasos = [
+            "Ingresa al portal www.seniat.gob.ve",
+            "Haz clic en '¿Olvidaste tu clave?'",
+            "Ingresa tu número de RIF",
+            "Ingresa tu correo electrónico registrado",
+            "Revisa tu correo y sigue las instrucciones",
+            "Si no tienes correo registrado, acude a la oficina del SENIAT más cercana con tu cédula",
+        ]
+        for i, paso in enumerate(pasos, 1):
+            st.markdown(f"**Paso {i}:** {paso}")
+
+    elif tramite == "Inscribirse como Contribuyente Especial":
+        st.markdown("### 📌 Inscripción como Contribuyente Especial")
+        st.info("ℹ️ La calificación de Contribuyente Especial la otorga el SENIAT, no se solicita directamente.")
+        pasos = [
+            "El SENIAT te notifica mediante carta o publicación oficial",
+            "Recibes la notificación de calificación como Contribuyente Especial",
+            "Acude a la Gerencia Regional de Tributos Internos",
+            "Presenta tu RIF y cédula de identidad",
+            "Firma la notificación de calificación",
+            "A partir de ese momento cumples con el calendario de Contribuyentes Especiales",
+        ]
+        for i, paso in enumerate(pasos, 1):
+            st.markdown(f"**Paso {i}:** {paso}")
+
+    elif tramite == "Interponer Recurso Jerárquico":
+        st.markdown("### 📌 Cómo interponer un Recurso Jerárquico")
+        pasos = [
+            "Recibe y lee detenidamente el acto administrativo del SENIAT",
+            "Tienes 25 días hábiles para interponer el recurso",
+            "Redacta el escrito del recurso con tus argumentos",
+            "Anexa todas las pruebas que soporten tu caso",
+            "Presenta el escrito en la oficina del SENIAT que emitió el acto",
+            "Solicita el sello de recibido en tu copia",
+            "El SENIAT tiene 60 días hábiles para responder",
+            "Si no responde, se considera silencio administrativo negativo",
+            "Puedes acudir al Tribunal Contencioso Tributario si es necesario",
+        ]
+        for i, paso in enumerate(pasos, 1):
+            st.markdown(f"**Paso {i}:** {paso}")
+        st.error("⚠️ **Importante
 
 st.markdown("---")
 st.markdown("""
@@ -445,6 +592,7 @@ st.markdown("""
     📍 Venezuela
 </div>
 """, unsafe_allow_html=True)
+
 
 
 
