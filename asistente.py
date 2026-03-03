@@ -348,7 +348,6 @@ with tab3:
 | 6 y 7 | Jueves |
 | 8 y 9 | Viernes |
         """)
-    st.error("Consecuencias por declarar fuera de tiempo: Multa de 10 UT por mes de retraso, intereses moratorios y posible cierre del establecimiento.")
 
 with tab4:
     st.markdown("## Glosario Tributario SENIAT")
@@ -464,4 +463,5 @@ st.markdown("""
     📍 Venezuela
 </div>
 """, unsafe_allow_html=True)
+
 
